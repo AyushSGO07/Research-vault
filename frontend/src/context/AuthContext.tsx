@@ -12,6 +12,7 @@ interface AuthContextType {
   openAuthModal: () => void;
   closeAuthModal: () => void;
   login: (email: string, password: string) => Promise<void>;
+  loginAsDemo: () => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -47,7 +48,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const login = async (email: string, password: string) => {
-    const res = await authApi.login({ email, password });
+    const cleanEmail = email.trim().toLowerCase();
+    const res = await authApi.login({ email: cleanEmail, password });
     localStorage.setItem("auth_token", res.access_token);
     setToken(res.access_token);
     const userData = await authApi.getMe();
@@ -55,9 +57,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsAuthModalOpen(false);
   };
 
+  const loginAsDemo = async () => {
+    await login("demo@researchvault.edu", "DemoPassword123!");
+  };
+
   const register = async (name: string, email: string, password: string) => {
-    await authApi.register({ name, email, password });
-    await login(email, password);
+    const cleanEmail = email.trim().toLowerCase();
+    await authApi.register({ name: name.trim(), email: cleanEmail, password });
+    await login(cleanEmail, password);
   };
 
   const logout = () => {
@@ -80,6 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         openAuthModal,
         closeAuthModal,
         login,
+        loginAsDemo,
         register,
         logout,
       }}

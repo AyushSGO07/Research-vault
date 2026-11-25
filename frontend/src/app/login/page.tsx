@@ -3,13 +3,13 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Lock, Mail, AlertCircle, BookOpen } from "lucide-react";
+import { Lock, Mail, AlertCircle, BookOpen, Sparkles } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login } = useAuth();
+  const { login, loginAsDemo } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -24,6 +24,19 @@ export default function LoginPage() {
       router.push("/");
     } catch (err: any) {
       setError(err.message || "Failed to log in");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await loginAsDemo();
+      router.push("/");
+    } catch (err: any) {
+      setError(err.message || "Failed to log in as demo user");
     } finally {
       setIsSubmitting(false);
     }
@@ -48,6 +61,37 @@ export default function LoginPage() {
             <span>{error}</span>
           </div>
         )}
+
+        {/* Quick Demo Access Card */}
+        <div className="p-4 bg-accent/5 border border-accent/20 rounded-lg space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="font-heading font-semibold text-xs text-accent flex items-center gap-1.5">
+              <Sparkles className="w-4 h-4" />
+              Demo Researcher Account
+            </span>
+            <span className="font-meta text-[11px] text-textMuted">Dr. Alan Turing</span>
+          </div>
+          <p className="font-body text-xs text-textSecondary leading-normal">
+            Instant 1-click access pre-configured with 3 indexed research papers, academic benchmark suites, and past query evaluation runs.
+          </p>
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            disabled={isSubmitting}
+            className="w-full py-2 px-3 bg-accent text-white font-heading font-medium text-xs rounded hover:bg-accent/90 transition-colors shadow-xs flex items-center justify-center space-x-2 disabled:opacity-60"
+          >
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>1-Click Demo Login</span>
+          </button>
+        </div>
+
+        <div className="relative flex py-1 items-center">
+          <div className="flex-grow border-t border-borderNeutral"></div>
+          <span className="flex-shrink mx-3 text-textMuted text-[11px] font-meta uppercase">
+            Or Sign In with Email
+          </span>
+          <div className="flex-grow border-t border-borderNeutral"></div>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

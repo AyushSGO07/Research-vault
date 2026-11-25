@@ -10,12 +10,14 @@ import {
   Folder,
   UploadCloud,
   History,
+  BarChart3,
   Settings,
   Menu,
   X,
   BookOpen,
   LogOut,
-  User as UserIcon
+  User as UserIcon,
+  Sparkles,
 } from "lucide-react";
 import { NavItem } from "@/types/navigation";
 
@@ -26,6 +28,7 @@ const navItems: NavItem[] = [
   { id: "collections", label: "Collections", href: "/collections", icon: Folder },
   { id: "upload", label: "Upload Documents", href: "/upload", icon: UploadCloud },
   { id: "history", label: "Search History", href: "/history", icon: History },
+  { id: "evaluation", label: "Evaluation", href: "/evaluation", icon: BarChart3 },
   { id: "settings", label: "Settings", href: "/settings", icon: Settings },
 ];
 
@@ -33,12 +36,14 @@ interface AppSidebarProps {
   user?: { name: string; email: string } | null;
   onSignOut?: () => void;
   onOpenAuth?: () => void;
+  onDemoLogin?: () => void;
 }
 
 export const AppSidebar: React.FC<AppSidebarProps> = ({
   user,
   onSignOut,
   onOpenAuth,
+  onDemoLogin,
 }) => {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -128,13 +133,24 @@ export const AppSidebar: React.FC<AppSidebarProps> = ({
             )}
           </div>
         ) : (
-          <button
-            onClick={onOpenAuth}
-            className="w-full flex items-center justify-center space-x-2 py-2 px-3 border border-borderNeutral rounded-md text-xs font-heading text-textPrimary bg-bgSecondary hover:bg-borderNeutral/50 transition-colors"
-          >
-            <UserIcon className="w-3.5 h-3.5 text-accent" />
-            <span>Sign In / Register</span>
-          </button>
+          <div className="space-y-2">
+            {onDemoLogin && (
+              <button
+                onClick={onDemoLogin}
+                className="w-full flex items-center justify-center space-x-2 py-2 px-3 rounded-md text-xs font-heading font-medium text-white bg-accent hover:bg-accent/90 transition-colors shadow-xs"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>1-Click Demo Login</span>
+              </button>
+            )}
+            <button
+              onClick={onOpenAuth}
+              className="w-full flex items-center justify-center space-x-2 py-1.5 px-3 border border-borderNeutral rounded-md text-xs font-heading text-textSecondary bg-bgSecondary hover:bg-borderNeutral/50 transition-colors"
+            >
+              <UserIcon className="w-3.5 h-3.5 text-textMuted" />
+              <span>Sign In / Register</span>
+            </button>
+          </div>
         )}
       </div>
     </div>

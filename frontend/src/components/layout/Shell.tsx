@@ -7,7 +7,7 @@ import { AuthModal } from "@/components/auth/AuthModal";
 import { useAuth } from "@/context/AuthContext";
 
 export const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { user, logout, openAuthModal } = useAuth();
+  const { user, logout, openAuthModal, loginAsDemo } = useAuth();
 
   return (
     <div className="min-h-screen bg-bgMain flex flex-col lg:flex-row">
@@ -16,6 +16,7 @@ export const Shell: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         user={user ? { name: user.name, email: user.email } : null}
         onSignOut={logout}
         onOpenAuth={openAuthModal}
+        onDemoLogin={loginAsDemo}
       />
 
       {/* Main Content Area */}

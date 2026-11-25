@@ -1,10 +1,45 @@
-.planning/
+# Dependencies & Package Managers
 node_modules/
-dist/
-.env
-__pycache__/
-*.pyc
 .venv/
 venv/
-*.db
+dist/
+
+# Environment Variables & Local Configs
+.env
+.env.*
+*.local
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Next.js & Build Output
 .next/
+out/
+build/
+
+# Databases & Vector Stores
+*.db
+*.db-shm
+*.db-wal
+*.sqlite3
+chroma_db/
+backend/chroma_db/
+
+# Uploads & Media Assets
+uploads/
+backend/uploads/
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Planning
+.planning/

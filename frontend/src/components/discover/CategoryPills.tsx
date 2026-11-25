@@ -33,7 +33,7 @@ export const CategoryPills: React.FC = () => {
   const router = useRouter();
 
   const handleSelectCategory = (categoryName: string) => {
-    router.push(`/search?domain=${encodeURIComponent(categoryName)}`);
+    router.push(`/search?q=${encodeURIComponent(categoryName)}&domain=${encodeURIComponent(categoryName)}`);
   };
 
   return (

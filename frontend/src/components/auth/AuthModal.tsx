@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Lock, Mail, User as UserIcon, AlertCircle } from "lucide-react";
+import { X, Lock, Mail, User as UserIcon, AlertCircle, Sparkles } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/Button";
 
 export const AuthModal: React.FC = () => {
-  const { isAuthModalOpen, closeAuthModal, login, register } = useAuth();
+  const { isAuthModalOpen, closeAuthModal, login, loginAsDemo, register } = useAuth();
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,6 +15,18 @@ export const AuthModal: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isAuthModalOpen) return null;
+
+  const handleDemoLogin = async () => {
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      await loginAsDemo();
+    } catch (err: any) {
+      setError(err.message || "Failed to log in as demo user");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,6 +70,37 @@ export const AuthModal: React.FC = () => {
               <span>{error}</span>
             </div>
           )}
+
+          {/* Quick Demo Access Card */}
+          <div className="p-3.5 bg-accent/5 border border-accent/20 rounded-md space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="font-heading font-semibold text-xs text-accent flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                Demo Researcher Account
+              </span>
+              <span className="font-meta text-[11px] text-textMuted">Dr. Alan Turing</span>
+            </div>
+            <p className="font-body text-[11px] text-textSecondary leading-normal">
+              Pre-loaded with 3 canonical indexed papers, academic benchmark suites, and past search history.
+            </p>
+            <button
+              type="button"
+              onClick={handleDemoLogin}
+              disabled={isSubmitting}
+              className="w-full py-1.5 px-3 bg-accent text-white font-heading font-medium text-xs rounded hover:bg-accent/90 transition-colors shadow-xs flex items-center justify-center space-x-1.5 disabled:opacity-60"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>1-Click Demo Login</span>
+            </button>
+          </div>
+
+          <div className="relative flex py-1 items-center">
+            <div className="flex-grow border-t border-borderNeutral"></div>
+            <span className="flex-shrink mx-3 text-textMuted text-[11px] font-meta uppercase">
+              Or {isLogin ? "Sign In" : "Register"} with Email
+            </span>
+            <div className="flex-grow border-t border-borderNeutral"></div>
+          </div>
 
           {!isLogin && (
             <div>
