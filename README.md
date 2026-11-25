@@ -11,7 +11,7 @@
 
 ---
 
-## 🌟 Core Philosophy
+## Core Philosophy
 
 Traditional academic search engines either rely strictly on rigid lexical keyword matching or synthesize unverified answers. **ResearchVault** bridges the gap with:
 1. **Zero Mock Data**: Authentic passage extraction, true vector cosine similarities, and cross-encoder relevance scores computed live against real indexed literature.
@@ -21,7 +21,7 @@ Traditional academic search engines either rely strictly on rigid lexical keywor
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart TD
@@ -63,7 +63,7 @@ flowchart TD
 
 ---
 
-## ✨ Features
+## Features
 
 - **Multi-Paradigm Search Engine**:
   - **Hybrid Search (Default)**: Combines dense vector similarities and BM25 token matching using Reciprocal Rank Fusion ($k=60$).
@@ -95,7 +95,7 @@ flowchart TD
 
 ---
 
-## 🚀 Quickstart
+## Quickstart
 
 ### Option A: Local Development (Windows / macOS / Linux)
 
@@ -168,7 +168,7 @@ docker-compose exec backend python app/scripts/seed_corpus.py
 
 ---
 
-## ⚙️ Environment Variables
+## Environment Variables
 
 | Variable | Default | Description |
 |---|---|---|
@@ -184,7 +184,7 @@ docker-compose exec backend python app/scripts/seed_corpus.py
 
 ---
 
-## 🧪 Testing
+## Testing
 
 Execute full automated test suite (81 tests across all 7 phases):
 
@@ -198,7 +198,7 @@ npm run build --prefix frontend
 
 ---
 
-## 📖 Deployment
+## Deployment
 
 For production deployment instructions on cloud virtual machines, AWS ECS, Google Cloud Run, reverse proxy configurations (Nginx & Caddy with SSL), and persistent backup strategies, refer to **[DEPLOYMENT.md](file:///D:/Reseach_Vault/DEPLOYMENT.md)**.
 
